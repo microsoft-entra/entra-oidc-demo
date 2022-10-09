@@ -4,17 +4,19 @@ using Microsoft.Identity.Web;
 
 namespace entra_oidc_demo.Pages;
 
-public class IndexModel : PageModel
+public class SearchProfileModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    private readonly ILogger<SearchProfileModel> _logger;
     private readonly ITokenAcquisition _tokenAcquisition;
     public string AccessToken { get; set; }
+    public string UPN { get; set; }
 
-    public IndexModel(ILogger<IndexModel> logger, ITokenAcquisition tokenAcquisition)
+    public SearchProfileModel(ILogger<SearchProfileModel> logger, ITokenAcquisition tokenAcquisition)
     {
         _logger = logger;
         _tokenAcquisition = tokenAcquisition;
         AccessToken = "";
+        
     }
 
     public async Task OnGetAsync()
@@ -23,7 +25,7 @@ public class IndexModel : PageModel
         {
             try
             {
-                this.AccessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(new[] { "https://graph.microsoft.com/user.read" });
+                this.AccessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(new[] { "https://graph.microsoft.com/.default" });
                 ViewData["access_token"] = this.AccessToken;
             }
             catch (System.Exception)
@@ -32,5 +34,11 @@ public class IndexModel : PageModel
             }
 
         }
+
+        if (this.Request.Query.Keys.Contains("upn"))
+        {
+            this.UPN = Request.Query["upn"][0];
+        }
+
     }
 }

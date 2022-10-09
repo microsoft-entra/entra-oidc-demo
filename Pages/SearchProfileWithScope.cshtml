@@ -1,12 +1,25 @@
 ﻿@page
-@model IndexModel
+@model SearchProfileWithScopeModel
 @{
-ViewData["Title"] = "My profile";
+    ViewData["Title"] = "Search profile";
 }
 
 <div class="text-center">
-    <h1 class="display-4" style="padding-top: 20px;"><i class="bi me-2 bi-person-circle"> </i> My profile</h1>
+    <h1 class="display-4" style="padding-top: 20px;"><i class="bi me-2 bi-search"> </i> Search profile with <b>User.Read.All</b> scope</h1>
 </div>
+
+<form class="row gx-3 gy-2 align-items-center">
+    <div class="col-sm-3">
+        <label class="visually-hidden" for="upn">User principal name</label>
+        <div class="input-group">
+            <div class="input-group-text">@@</div>
+            <input type="text" class="form-control" id="upn" name="upn" placeholder="User principal name" value="@Model.UPN">
+        </div>
+    </div>
+    <div class="col-auto">
+        <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
 
 <div style="padding-left: 25px;">
     <!-- Request code -->
@@ -18,9 +31,7 @@ ViewData["Title"] = "My profile";
 
         </code>
     </div>
-    @* <br />
-    <button type="button" class="btn btn-link" onclick="start()"><i class="bi bi-caret-right"></i> Get user
-        profile</button> *@
+
     <br />
     <!-- Error -->
     <div id="errorContainer">
@@ -46,9 +57,11 @@ ViewData["Title"] = "My profile";
     </div>
 </div>
 
-<script id="sampleJavaScript">
+@if (this.Request.Query.Keys.Contains("upn"))
+{
+    <script id="sampleJavaScript">
     var settings = {
-        "url": "https://graph.microsoft.com/v1.0/me",
+        "url": "https://graph.microsoft.com/v1.0/users/@Model.UPN",
         "method": "GET",
         "headers": {
             "Authorization": "Bearer @Model.AccessToken"
@@ -56,7 +69,7 @@ ViewData["Title"] = "My profile";
     };
 
     function getProfile() {
-        console.log("getProfile")
+
         $.ajax(settings).done(function (response) {
             render(response);
 
@@ -65,18 +78,27 @@ ViewData["Title"] = "My profile";
         });
     }
 </script>
+}
 
+<script>
+    
+    function renderError(json) {
+        document.getElementById("error").innerHTML = JSON.stringify(json, null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
+        document.getElementById("errorContainer").style.display = ""
+    }
+
+    document.getElementById("errorContainer").style.display = "none";
+    document.getElementById("error").innerHTML = "";
+</script>
+
+@if (this.Request.Query.Keys.Contains("upn"))
+{
 <script>
 
     function render(json) {
         document.getElementById("resultCode").innerHTML = JSON.stringify(json, null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
 
         renderForm(json)
-    }
-    
-    function renderError(json) {
-        document.getElementById("error").innerHTML = JSON.stringify(json, null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
-        document.getElementById("errorContainer").style.display = ""
     }
 
     function start() {
@@ -91,3 +113,4 @@ ViewData["Title"] = "My profile";
 
     start();
 </script>
+}

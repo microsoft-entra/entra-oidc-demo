@@ -46,10 +46,6 @@
             document.getElementById("result").innerHTML = text
         }
 
-        function renderError(json) {
-            document.getElementById("error").innerHTML = JSON.stringify(json, null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
-            document.getElementById("errorContainer").style.display = ""
-        }
     </script>
 
 </head>
@@ -61,12 +57,15 @@
             <div class="sidebar-heading border-bottom bg-light text-white"
                 style="background-color: #0B0B45!important;;">Menu</div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"> <i
+                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area="" asp-page="/Index"> <i
                         class="bi me-2 bi-person-circle"></i>
                     My profile</a>
-                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"><i
+                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area="" asp-page="/SearchProfile"><i
                         class="bi me-2 bi-search"></i>
                     Search profile</a>
+                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area="" asp-page="/SearchProfileWithScope"><i
+                        class="bi me-2 bi-search-heart-fill"></i>
+                    Search profile with scope</a>
                 <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"><i
                         class="bi me-2 bi-person-lines-fill"></i>
                     Edit profile</a>

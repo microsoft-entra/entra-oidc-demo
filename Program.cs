@@ -19,6 +19,7 @@ builder.Services.AddAuthorization(options =>
     // By default, all incoming requests will be authorized according to the default policy.
     options.FallbackPolicy = options.DefaultPolicy;
 });
+
 builder.Services.AddRazorPages()
     .AddMicrosoftIdentityUI();
 
@@ -41,6 +42,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
-app.MapControllers();
+// app.MapControllers();
 
+app.UseEndpoints(endpoints =>
+  {
+   endpoints.MapControllers();
+   // More here
+  });
+  
 app.Run();
