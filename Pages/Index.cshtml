@@ -1,32 +1,49 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+ViewData["Title"] = "Home page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">My profile</h1>
+    <h1 class="display-4" style="padding-top: 20px;">My profile</h1>
 </div>
 
-<div>
-
-    <div class="alert alert-secondary" role="alert">
-        Request
-    </div>
-    <code style="overflow-x: scroll!important; white-space: nowrap;" id="sampleJavaScriptCode">
-
-    </code>
-    <br />
-    <button type="button" class="btn btn-link" onclick="getProfile()"><i class="bi bi-caret-right"></i> Get user
-        profile</button>
-
-    <br />
-    <div id="resultContainer" style="display: none">
+<div style="padding-left: 25px;">
+    <!-- Request code -->
+    <div id="requestCodeContainer" style="display: none">
         <div class="alert alert-secondary" role="alert">
-            Response
+            HTTP GET request
         </div>
-        <code style="overflow-x: scroll!important; white-space: nowrap;" id="result">
+        <code style="overflow-x: scroll!important; white-space: nowrap;" id="sampleJavaScriptCode">
+
+        </code>
+    </div>
+    @* <br />
+    <button type="button" class="btn btn-link" onclick="start()"><i class="bi bi-caret-right"></i> Get user
+        profile</button> *@
+    <br />
+    <!-- Error -->
+    <div id="errorContainer">
+        <div class="alert alert-danger" role="alert">
+            Error
         </div>
+        <code style="overflow-x: scroll!important; white-space: nowrap;" id="error"></code>
+    </div>
+
+    <!-- Result code -->
+    <div id="resultCodeContainer" style="display: none">
+        <div class="alert alert-success" role="alert">
+            HTTP response
+        </div>
+        <code style="overflow-x: scroll!important; white-space: nowrap;" id="resultCode"></code>
+    </div>
+
+    <!-- Result -->
+    <div id="resultContainer">
+        <form id="result">
+
+        </form>
+    </div>
 </div>
 
 <script id="sampleJavaScript">
@@ -39,22 +56,33 @@
     };
 
     function getProfile() {
+        console.log("getProfile")
         $.ajax(settings).done(function (response) {
             render(response);
 
-        }).fail(function(jqXHR, textStatus) {
-            render(jqXHR.responseJSON);
+        }).fail(function (jqXHR, textStatus) {
+            renderError(jqXHR.responseJSON);
         });
     }
 </script>
 
 <script>
+
     function render(json) {
-        document.getElementById("result").innerHTML = JSON.stringify(json, null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
-        document.getElementById("resultContainer").style.display = "";
+        document.getElementById("resultCode").innerHTML = JSON.stringify(json, null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
+
+        renderForm(json)
+    }
+
+    function start() {
+        document.getElementById("errorContainer").style.display = "none";
+        document.getElementById("error").innerHTML = "";
+
+        getProfile();
     }
 
     var js = document.getElementById("sampleJavaScript").text
     document.getElementById("sampleJavaScriptCode").innerHTML = js.replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;")
 
+    start();
 </script>

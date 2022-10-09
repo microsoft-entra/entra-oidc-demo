@@ -9,6 +9,49 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/auth_request_generator.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        function showCode(json) {
+
+            if (document.getElementById("requestCodeContainer").style.display === "") {
+                // Hide code
+                document.getElementById("requestCodeContainer").style.display = "none";
+                document.getElementById("resultCodeContainer").style.display = "none";
+            }
+            else {
+                // Show code
+                document.getElementById("requestCodeContainer").style.display = "";
+
+                if (document.getElementById("errorContainer").style.display != "")
+                    document.getElementById("resultCodeContainer").style.display = "";
+            }
+        }
+
+        function renderForm(json) {
+
+            var text = "";
+            var i = 0;
+            for (let x in json) {
+                if (!x.includes("@@"))
+                {
+                    i++;
+                    text += "\n<div class='form-group row' style='padding-top: 15px'><label for='input" + i + "' class='col-sm-2 col-form-label'>" + x + "</label><div class='col-sm-5'><input type='textbox' class='form-control' id=input" + i + " value='" + json[x] + "'></div></div>";
+                }
+            }
+
+            document.getElementById("result").innerHTML = text
+        }
+
+        function renderError(json) {
+            document.getElementById("error").innerHTML = JSON.stringify(json, null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
+            document.getElementById("errorContainer").style.display = ""
+        }
+    </script>
+
 </head>
 
 <body>
@@ -41,10 +84,10 @@
                     Settings</a>
                 @if (ViewData["access_token"] != null)
                 {
-                    <a class="list-group-item list-group-item-action list-group-item p-3"
+                <a class="list-group-item list-group-item-action list-group-item p-3"
                     href='https://jwt.ms/#access_token=@ViewData["access_token"]'><i
                         class="bi me-2 bi-file-earmark-binary"></i>
-                        Access token</a>
+                    Access token</a>
                 }
             </div>
         </div>
@@ -60,7 +103,11 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                            <partial name="_LoginPartial" />
+                            <li style="margin-right: 20px;">
+                                <button type="submit" class="btn btn-primary" onclick="showCode()"><i
+                                        class="bi bi-code"></i></button>
+                            <li>
+                                <partial name="_LoginPartial" />
                         </ul>
                     </div>
                 </div>
@@ -71,10 +118,6 @@
             </div>
         </div>
     </div>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
