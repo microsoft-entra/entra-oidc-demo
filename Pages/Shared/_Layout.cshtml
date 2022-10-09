@@ -15,7 +15,8 @@
     <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
         <div class="border-end bg-light" id="sidebar-wrapper">
-            <div class="sidebar-heading border-bottom bg-light text-white" style="background-color: #0B0B45!important;;">Menu</div>
+            <div class="sidebar-heading border-bottom bg-light text-white"
+                style="background-color: #0B0B45!important;;">Menu</div>
             <div class="list-group list-group-flush">
                 <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"> <i
                         class="bi me-2 bi-person-circle"></i>
@@ -38,15 +39,20 @@
                 <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"> <i
                         class="bi me-2 bi-wrench"></i>
                     Settings</a>
-                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"><i
+                @if (ViewData["access_token"] != null)
+                {
+                    <a class="list-group-item list-group-item-action list-group-item p-3"
+                    href='https://jwt.ms/#access_token=@ViewData["access_token"]'><i
                         class="bi me-2 bi-file-earmark-binary"></i>
-                    Access token</a>
+                        Access token</a>
+                }
             </div>
         </div>
         <!-- Page content wrapper-->
         <div id="page-content-wrapper">
             <!-- Top navigation-->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary border-bottom"  style="background-color: #0B0B45!important;">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary border-bottom"
+                style="background-color: #0B0B45!important;">
                 <div class="container-fluid">
                     <a class="navbar-brand" asp-area="" asp-page="/Index"><i class="bi bi-layers-half"></i> Entra
                         eLearning
