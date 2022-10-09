@@ -1,47 +1,81 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - entra_oidc_demo</title>
+    <title>@ViewData["Title"] - Entra eLearning demo</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/entra_oidc_demo.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/auth_request_generator.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">entra_oidc_demo</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - entra_oidc_demo - <a asp-area="" asp-page="/Privacy">Privacy</a>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar-->
+        <div class="border-end bg-light" id="sidebar-wrapper">
+            <div class="sidebar-heading border-bottom bg-light text-white" style="background-color: #0B0B45!important;;">Menu</div>
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"> <i
+                        class="bi me-2 bi-person-circle"></i>
+                    My profile</a>
+                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"><i
+                        class="bi me-2 bi-search"></i>
+                    Search profile</a>
+                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"><i
+                        class="bi me-2 bi-person-lines-fill"></i>
+                    Edit profile</a>
+                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"><i
+                        class="bi me-2 bi-cart3"></i>
+                    Orders</a>
+                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"><i
+                        class="bi me-2 bi-calendar-date"></i>
+                    Schedule</a>
+                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"><i
+                        class="bi me-2 bi-graph-up-arrow"></i>
+                    Reports</a>
+                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"> <i
+                        class="bi me-2 bi-wrench"></i>
+                    Settings</a>
+                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"><i
+                        class="bi me-2 bi-file-earmark-binary"></i>
+                    Access token</a>
+            </div>
         </div>
-    </footer>
+        <!-- Page content wrapper-->
+        <div id="page-content-wrapper">
+            <!-- Top navigation-->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary border-bottom"  style="background-color: #0B0B45!important;">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-page="/Index"><i class="bi bi-layers-half"></i> Entra
+                        eLearning
+                        demo</a>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#!">Action</a>
+                                    <a class="dropdown-item" href="#!">Another action</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#!">Something else here</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- Page content-->
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -49,4 +83,5 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
