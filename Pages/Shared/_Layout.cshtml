@@ -36,8 +36,7 @@
             var text = "";
             var i = 0;
             for (let x in json) {
-                if (!x.includes("@@"))
-                {
+                if (!x.includes("@@")) {
                     i++;
                     text += "\n<div class='form-group row' style='padding-top: 15px'><label for='input" + i + "' class='col-sm-2 col-form-label'>" + x + "</label><div class='col-sm-5'><input type='textbox' class='form-control' id=input" + i + " value='" + json[x] + "'></div></div>";
                 }
@@ -58,10 +57,13 @@
                 style="background-color: #0B0B45!important;;">Menu</div>
             <div class="list-group list-group-flush">
                 <a class="list-group-item list-group-item-action list-group-item p-3" asp-area="" asp-page="/Index"> <i
+                        class="bi me-2 bi-grid-3x3-gap-fill"></i>
+                    Discover</a>
+                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area="" asp-page="/Me"> <i
                         class="bi me-2 bi-person-circle"></i>
                     My profile</a>
-                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area="" asp-page="/SearchProfile"><i
-                        class="bi me-2 bi-search"></i>
+                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area=""
+                    asp-page="/SearchProfile"><i class="bi me-2 bi-search"></i>
                     Search profile</a>
                 <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"><i
                         class="bi me-2 bi-person-lines-fill"></i>
@@ -80,10 +82,10 @@
                     Settings</a>
                 @if (ViewData["access_token"] != null)
                 {
-                <a class="list-group-item list-group-item-action list-group-item p-3"
+                    <a class="list-group-item list-group-item-action list-group-item p-3"
                     href='https://jwt.ms/#access_token=@ViewData["access_token"]'><i
                         class="bi me-2 bi-file-earmark-binary"></i>
-                    Access token</a>
+                        Access token</a>
                 }
             </div>
         </div>
