@@ -13,7 +13,8 @@
         <label class="visually-hidden" for="upn">User principal name</label>
         <div class="input-group">
             <div class="input-group-text">@@</div>
-            <input type="text" class="form-control" id="upn" name="upn" placeholder="User principal name" value="@Model.UPN">
+            <input type="text" class="form-control" id="upn" name="upn" placeholder="User principal name"
+                value="@Model.UPN">
         </div>
     </div>
     <div class="col-auto">
@@ -39,6 +40,9 @@
             Error
         </div>
         <code style="overflow-x: scroll!important; white-space: nowrap;" id="error"></code>
+        <br/>
+        <a id="fixScopeIssue" style="display:  none;" class="text-dark" asp-area="MicrosoftIdentity"
+            asp-controller="MyAccount" asp-action="SignInWithUserReadAll">Sign with User.Read.All scope</a>
     </div>
 
     <!-- Result code -->
@@ -81,10 +85,13 @@
 }
 
 <script>
-    
+
     function renderError(json) {
         document.getElementById("error").innerHTML = JSON.stringify(json, null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
         document.getElementById("errorContainer").style.display = ""
+
+        if (json.error.code === "Authorization_RequestDenied")
+            document.getElementById("fixScopeIssue").style.display = ""
     }
 
     document.getElementById("errorContainer").style.display = "none";
@@ -93,7 +100,7 @@
 
 @if (this.Request.Query.Keys.Contains("upn"))
 {
-<script>
+    <script>
 
     function render(json) {
         document.getElementById("resultCode").innerHTML = JSON.stringify(json, null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
