@@ -23,7 +23,7 @@ namespace entra_oidc_demo.Controllers
             scheme ??= OpenIdConnectDefaults.AuthenticationScheme;
             var redirectUrl = Url.Content("~/");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
-            properties.Items["add_scope"] = "user.read.all";
+            properties.Items["add_scope"] = "User.ReadBasic.All";
             return Challenge(properties, scheme);
         }
 
