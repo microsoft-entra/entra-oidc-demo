@@ -1,0 +1,165 @@
+﻿@page
+@model TerminalModel
+@{
+    ViewData["Title"] = "Send notifications";
+}
+
+<div class="text-center" id="PageHeader">
+    <h1 class="display-4" style="padding-top: 20px;"><i class="bi me-2 bi-megaphone"> </i> Send notifications</h1>
+</div>
+
+<div style="padding-left: 25px;">
+
+    <div id="signInForm">
+        <form class="form-horizontal" method="post">
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="tenantId">Tenant Id:</label>
+                <div class="col-sm-5">
+                    <input type="textbox" class="form-control" name="tenantId" id="tenantId"
+                        placeholder="Enter your tenant ID or tenant name" value="@Model.TenantId">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="ClientId">App (client) ID:</label>
+                <div class="col-sm-5">
+                    <input type="textbox" class="form-control" name="ClientId" id="ClientId"
+                        placeholder="Enter your application ID" value="@Model.ClientId">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="ClientSecret">App (client) secret:</label>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control" name="ClientSecret" id="ClientSecret"
+                        placeholder="Enter your app secret" value="@Model.ClientSecret">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-offset-2 col-sm-5">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <span id="ReadForGraph" style="display: none ;">@Model.ReadyForGraph</span>
+
+    <!-- Request code -->
+    <div id="requestCodeContainer" style="display: none">
+        <div class="alert alert-secondary" role="alert">
+            HTTP GET request
+        </div>
+        <code style="overflow-x: scroll!important; white-space: nowrap;" id="sampleJavaScriptCode">
+
+        </code>
+    </div>
+
+    <!-- Error -->
+    <div id="errorContainer" style="display: none">
+        <div class="alert alert-danger" role="alert">
+            Error
+        </div>
+        <code style="overflow-x: scroll!important; white-space: nowrap;" id="error"></code>
+        <code style="overflow-x: scroll!important; white-space: nowrap;" id="TokenError">@Model.AccessTokenError</code>
+    </div>
+
+    <!-- Result code -->
+    <div id="resultCodeContainer" style="display: none">
+        <div class="alert alert-success" role="alert">
+            HTTP response
+        </div>
+        <code style="overflow-x: scroll!important; white-space: nowrap;" id="resultCode"></code>
+    </div>
+
+    <!-- Result -->
+    <div id="resultContainer">
+        <div id="result" style="color: green ;">
+
+        </div>
+    </div>
+</div>
+
+<script id="sampleJavaScript">
+    function getUsers() {
+
+        var settings = {
+            "url": "https://graph.microsoft.com/v1.0/users",
+            "method": "GET",
+            "headers": {
+                "Authorization": "Bearer @Model.AccessToken"
+            },
+        };
+
+        $.ajax(settings).done(function (response) {
+            render(response);
+
+        }).fail(function (jqXHR, textStatus) {
+            renderError(jqXHR.responseJSON);
+        });
+    }
+</script>
+
+<script>
+    var messages = ["C:\\Program Files\\Notifications service> notify.exe", "C:\\Program Files\\Notifications service> Retrieving list of users..."];
+    var messagesIndex = 0;
+
+    function render(json) {
+        document.getElementById("resultCode").innerHTML = JSON.stringify(json, null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
+
+        for (var key in json.value) {
+            if (json.value.hasOwnProperty(key)) {
+                messages.push("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sending message to " + json.value[key].userPrincipalName);
+            }
+        }
+
+        messages.push("C:\\Program Files\\Notifications service>");
+
+        myInterval = setInterval(function () {
+            
+            if (messagesIndex >= (messages.length))
+            {
+                clearInterval(myInterval);
+            }
+            else
+            {
+                document.getElementById("result").innerHTML += messages[messagesIndex] + "<br />"
+            }
+            
+            messagesIndex ++;
+            
+            }, 1000);
+    }
+
+    function renderError(json) {
+        document.getElementById("error").innerHTML = JSON.stringify(json, null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
+        document.getElementById("errorContainer").style.display = ""
+    }
+
+    function start() {
+        document.getElementById("errorContainer").style.display = "none";
+        document.getElementById("error").innerHTML = "";
+
+        // The page is ready for graph query
+        if (document.getElementById("ReadForGraph").innerHTML == "True") {
+            document.getElementById("signInForm").style.display = "none";
+            document.getElementById("PageHeader").style.display = "none";
+            document.getElementById("PageContent").style.backgroundColor = "black";
+            document.getElementById("PageContent").style.height = "1000px";
+
+            getUsers();
+        }
+
+        // There is an error with the token acquisition
+        if (document.getElementById("TokenError").innerHTML.length > 5) {
+            document.getElementById("errorContainer").style.display = "";
+            document.getElementById("TokenError").innerHTML = JSON.stringify(JSON.parse(document.getElementById("TokenError").innerHTML), null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
+        }
+
+        //getProfile();
+    }
+
+    var js = document.getElementById("sampleJavaScript").text
+    document.getElementById("sampleJavaScriptCode").innerHTML = js.replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;")
+
+    start();
+</script>

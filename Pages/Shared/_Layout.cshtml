@@ -77,6 +77,10 @@
                 <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"><i
                         class="bi me-2 bi-graph-up-arrow"></i>
                     Reports</a>
+                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area=""
+                    asp-page="/Terminal"><i class="bi me-2 bi-megaphone"></i>
+                    Send notifications</a>
+
                 <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"> <i
                         class="bi me-2 bi-wrench"></i>
                     Settings</a>
@@ -111,7 +115,7 @@
                 </div>
             </nav>
             <!-- Page content-->
-            <div class="container-fluid">
+            <div class="container-fluid" id="PageContent">
                 @RenderBody()
             </div>
         </div>
