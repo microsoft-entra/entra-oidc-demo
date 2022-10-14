@@ -37,11 +37,11 @@ builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .EnableTokenAcquisitionToCallDownstreamApi(new string[] { "https://graph.microsoft.com/user.read" })
                     .AddInMemoryTokenCaches();
 
-builder.Services.AddAuthorization(options =>
-{
-    // By default, all incoming requests will be authorized according to the default policy.
-    options.FallbackPolicy = options.DefaultPolicy;
-});
+// builder.Services.AddAuthorization(options =>
+// {
+//     // By default, all incoming requests will be authorized according to the default policy.
+//     options.FallbackPolicy = options.DefaultPolicy;
+// });
 
 builder.Services.AddRazorPages()
     .AddMicrosoftIdentityUI();
