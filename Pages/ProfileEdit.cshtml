@@ -1,0 +1,109 @@
+﻿@page
+@model ProfileEditModel
+@{
+    ViewData["Title"] = "Edit profile";
+}
+
+<div class="text-center">
+    <h1 class="display-4" style="padding-top: 20px;"><i class="bi me-2 bi-person-lines-fill"> </i> Edit profile</h1>
+</div>
+
+<form class="form-horizontal" method="post">
+    <div class="form-group col-sm-5">
+        <label for="upn">User principal name</label>
+        <input type="text" class="form-control" id="upn">
+    </div>
+    <div class="form-group col-sm-5">
+        <label for="DisplayName">Display name</label>
+        <input type="text" class="form-control" id="DisplayName">
+    </div>
+    <button type="button" onclick="updateProfile()" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+</form>
+
+<div style="padding-left: 25px;">
+    <!-- Request code -->
+    <div id="requestCodeContainer" style="display: none">
+        <div class="alert alert-secondary" role="alert">
+            HTTP PATCH request
+        </div>
+        <code style="overflow-x: scroll!important; white-space: nowrap;" id="sampleJavaScriptCode">
+
+        </code>
+    </div>
+
+    <br />
+    <!-- Error -->
+    <div id="errorContainer">
+        <div class="alert alert-danger" role="alert">
+            Error
+        </div>
+        <code style="overflow-x: scroll!important; white-space: nowrap;" id="error"></code>
+    </div>
+
+    <!-- Result code -->
+    <div id="resultCodeContainer" style="display: none">
+        <div class="alert alert-success" role="alert">
+            HTTP response
+        </div>
+        <code style="overflow-x: scroll!important; white-space: nowrap;" id="resultCode"></code>
+    </div>
+
+    <!-- Result -->
+    <div id="resultContainer">
+        <div id="result" style="color: green;">
+
+        </div>
+    </div>
+</div>
+
+<script id="sampleJavaScript">
+
+    function updateProfile() {
+        var settings = {
+            "url": "https://graph.microsoft.com/v1.0/users/" + document.getElementById("upn").value,
+            "method": "PATCH",
+            "headers": {
+                "Authorization": "Bearer @Model.AccessToken",
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+                "displayName": document.getElementById("DisplayName").value
+            }),
+        };
+
+
+        $.ajax(settings).done(function (response) {
+            render(response);
+
+        }).fail(function (jqXHR, textStatus) {
+            renderError(jqXHR.responseJSON);
+        });
+    }
+</script>
+
+
+<script>
+
+    function renderError(json) {
+        document.getElementById("error").innerHTML = JSON.stringify(json, null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
+        document.getElementById("errorContainer").style.display = ""
+        document.getElementById("result").innerHTML = "";
+    }
+
+    document.getElementById("errorContainer").style.display = "none";
+    document.getElementById("error").innerHTML = "";
+
+    function render(json) {
+        document.getElementById("result").innerHTML = "The '" + document.getElementById("upn").value + "' profile was successfully updated";
+    }
+
+    function start() {
+        document.getElementById("errorContainer").style.display = "none";
+        document.getElementById("error").innerHTML = "";
+    }
+
+    var js = document.getElementById("sampleJavaScript").text
+    document.getElementById("sampleJavaScriptCode").innerHTML = js.replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;")
+
+    start();
+</script>
