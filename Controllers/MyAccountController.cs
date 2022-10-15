@@ -46,6 +46,16 @@ namespace entra_oidc_demo.Controllers
             properties.Items["add_scope"] = "Group.Read.All";
             return Challenge(properties, scheme);
         }
+
+        [HttpGet("{scheme?}")]
+        public IActionResult SignInForBlobStorage([FromRoute] string scheme)
+        {
+            scheme ??= OpenIdConnectDefaults.AuthenticationScheme;
+            var redirectUrl = Url.Content("~/");
+            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+            properties.Items["add_scope"] = "https://storage.azure.com/user_impersonation";
+            return Challenge(properties, scheme);
+        }
     }
 }
 

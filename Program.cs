@@ -26,8 +26,17 @@ builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
                 // If the add_scope exists, add the additional required scope
                 if (add_scope != null)
                 {
-                    if (!context.ProtocolMessage.Scope.Contains(add_scope))
-                        context.ProtocolMessage.Scope += " " + add_scope;
+
+                    if (add_scope == "https://storage.azure.com/user_impersonation")
+                    {
+                        // If the required scope is Azure Blob storage, remove other scopes
+                        //context.ProtocolMessage.Scope = "openid offline_access https://storage.azure.com/user_impersonation";
+                    }
+                    else
+                    {
+                        if (!context.ProtocolMessage.Scope.Contains(add_scope))
+                            context.ProtocolMessage.Scope += " " + add_scope;
+                    }
                 }
 
                 // 
@@ -35,6 +44,7 @@ builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
             };
         })
     .EnableTokenAcquisitionToCallDownstreamApi(new string[] { "https://graph.microsoft.com/user.read" })
+    //.EnableTokenAcquisitionToCallDownstreamApi(new string[] { "https://storage.azure.com/user_impersonation" })
                     .AddInMemoryTokenCaches();
 
 // builder.Services.AddAuthorization(options =>

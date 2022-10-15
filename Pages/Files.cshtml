@@ -1,0 +1,112 @@
+﻿@page
+@model FilesModel
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<div class="text-center">
+    <h1 class="display-4" style="padding-top: 20px;"><i class="bi me-2 bi-graph-up-arrow"> </i> Reports shaerd with you
+    </h1>
+</div>
+
+
+<div style="padding-left: 25px;">
+    <!-- Request code -->
+    <div id="requestCodeContainer" style="display: none">
+        <div class="alert alert-secondary" role="alert">
+            HTTP GET request
+        </div>
+        <code style="overflow-x: scroll!important; white-space: nowrap;" id="sampleJavaScriptCode">
+
+        </code>
+    </div>
+
+    <br />
+    <!-- Error -->
+    <div id="errorContainer">
+        <div class="alert alert-danger" role="alert">
+            Error
+        </div>
+        <code style="overflow-x: scroll!important; white-space: nowrap;" id="error"></code>
+    </div>
+
+    <!-- Result code -->
+    <div id="resultCodeContainer" style="display: none">
+        <div class="alert alert-success" role="alert">
+            HTTP response
+        </div>
+        <textarea style="overflow-x: scroll!important; white-space: nowrap; width: 100%" id="resultCode" cols="30"
+            rows="10"></textarea>
+    </div>
+
+    <!-- Result -->
+    <div id="resultContainer">
+        <form id="result">
+
+        </form>
+    </div>
+</div>
+
+
+<script id="sampleJavaScript">
+
+    function getFiles() {
+
+        var settings = {
+            "url": "https://kingdir.blob.core.windows.net/mycontainer?restype=container&comp=list",
+            "method": "GET",
+            "headers": {
+                "Authorization": "Bearer @Model.AccessToken",
+                "x-ms-version": "2020-04-08"
+            },
+        };
+
+        $.ajax(settings).done(function (response) {
+            render(response);
+
+        }).fail(function (jqXHR, textStatus) {
+            renderError(jqXHR.responseText, textStatus);
+        });
+    }
+</script>
+
+
+<script>
+
+    function renderError(responseText, textStatus) {
+        document.getElementById("error").innerHTML = responseText.replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
+        document.getElementById("errorContainer").style.display = ""
+    }
+
+    document.getElementById("errorContainer").style.display = "none";
+    document.getElementById("error").innerHTML = "";
+
+    function render(response) {
+
+        // The result XML code
+        document.getElementById("resultCode").value = response.documentElement.outerHTML;
+
+        // List of files
+        var files = response.documentElement.getElementsByTagName("Name")
+        var html = "<ul class='list-group list-group-flush'>"
+        for (let i = 0; i < files.length; i++) {
+
+            html += "<li class='list-group-item list-group-item-action'><i class='bi me-2 bi-file-bar-graph' style='color: silver;'> </i>" + files[i].textContent + "</li>"
+
+        }
+        html += "</ul>";
+        document.getElementById("result").innerHTML = html;
+    }
+
+    function start() {
+        document.getElementById("errorContainer").style.display = "none";
+        document.getElementById("error").innerHTML = "";
+
+        getFiles();
+    }
+
+    var js = document.getElementById("sampleJavaScript").text
+    document.getElementById("sampleJavaScriptCode").innerHTML = js.replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;")
+
+    start();
+</script>
