@@ -1,9 +1,23 @@
 @page
 @model IndexModel
 @{
-ViewData["Title"] = "Discover your path";
+    ViewData["Title"] = "Discover your path";
+}
+
+@if (@Model.ShowEdit)
+{
+    <br />
+    <a class="link-dark" href="#!"><i class="bi me-2 bi-plus"></i>
+    Add Course</a>
 }
 
 <div class="text-center">
-    <img style="padding-top: 20px;" src="~/discovery.png" />  
+    @if (@Model.ShowEdit)
+    {
+        <img style="padding-top: 20px;" src="~/discovery_edit.png" />
+    }
+    else
+    {
+        <img style="padding-top: 20px;" src="~/discovery.png" />
+    }
 </div>
