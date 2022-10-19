@@ -54,7 +54,8 @@ builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
 // });
 
 builder.Services.AddRazorPages()
-    .AddMicrosoftIdentityUI();
+    .AddMicrosoftIdentityUI()
+    .AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 
