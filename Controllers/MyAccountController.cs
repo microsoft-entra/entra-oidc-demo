@@ -18,11 +18,22 @@ namespace entra_oidc_demo.Controllers
     {
 
         [HttpGet("{scheme?}")]
+        public IActionResult SignIn([FromRoute] string scheme)
+        {
+            scheme ??= OpenIdConnectDefaults.AuthenticationScheme;
+            var redirectUrl = Url.Content("~/");
+            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+            properties.Items["source"] = Request.Headers["Referer"];
+            return Challenge(properties, scheme);
+        }
+
+        [HttpGet("{scheme?}")]
         public IActionResult SignInWithUserReadAll([FromRoute] string scheme)
         {
             scheme ??= OpenIdConnectDefaults.AuthenticationScheme;
             var redirectUrl = Url.Content("~/");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+            properties.Items["source"] = Request.Headers["Referer"];
             properties.Items["add_scope"] = "User.ReadBasic.All";
             return Challenge(properties, scheme);
         }
@@ -33,6 +44,7 @@ namespace entra_oidc_demo.Controllers
             scheme ??= OpenIdConnectDefaults.AuthenticationScheme;
             var redirectUrl = Url.Content("~/");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+            properties.Items["source"] = Request.Headers["Referer"];
             properties.Items["add_scope"] = "User.ReadWrite.All";
             return Challenge(properties, scheme);
         }
@@ -43,6 +55,7 @@ namespace entra_oidc_demo.Controllers
             scheme ??= OpenIdConnectDefaults.AuthenticationScheme;
             var redirectUrl = Url.Content("~/");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+            properties.Items["source"] = Request.Headers["Referer"];
             properties.Items["add_scope"] = "Group.Read.All";
             return Challenge(properties, scheme);
         }
@@ -53,6 +66,7 @@ namespace entra_oidc_demo.Controllers
             scheme ??= OpenIdConnectDefaults.AuthenticationScheme;
             var redirectUrl = Url.Content("~/");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+            properties.Items["source"] = Request.Headers["Referer"];
             properties.Items["add_scope"] = "https://storage.azure.com/user_impersonation";
             return Challenge(properties, scheme);
         }

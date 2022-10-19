@@ -18,8 +18,24 @@ builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
             options.ClientSecret = builder.Configuration.GetValue<string>("AzureAd:ClientSecret");
             options.CallbackPath = builder.Configuration.GetValue<string>("AzureAd:CallbackPath");
             options.Events ??= new OpenIdConnectEvents();
+
+            options.Events.OnRedirectToIdentityProviderForSignOut += context =>
+            {
+                return Task.FromResult(false);
+            };
+
             options.Events.OnRedirectToIdentityProvider += context =>
             {
+
+                // Read the source page
+                var source = context.Properties.Items.FirstOrDefault(x => x.Key == "source").Value;
+                if (source != null)
+                {
+                    context.Response.Cookies.Append(
+                         "source", source,
+                         new CookieOptions() { SameSite = SameSiteMode.Lax });
+                }
+
                 // Read the custom add_scope parameter
                 var add_scope = context.Properties.Items.FirstOrDefault(x => x.Key == "add_scope").Value;
 
@@ -44,7 +60,7 @@ builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
             };
         })
     .EnableTokenAcquisitionToCallDownstreamApi(new string[] { "https://graph.microsoft.com/user.read" })
-    //.EnableTokenAcquisitionToCallDownstreamApi(new string[] { "https://storage.azure.com/user_impersonation" })
+                    //.EnableTokenAcquisitionToCallDownstreamApi(new string[] { "https://storage.azure.com/user_impersonation" })
                     .AddInMemoryTokenCaches();
 
 // builder.Services.AddAuthorization(options =>

@@ -21,8 +21,20 @@ public class IndexModel : PageModel
         AccessToken = "";
     }
 
-    public async Task OnGetAsync()
+    public async Task<IActionResult> OnGetAsync()
     {
+        if (this.Request.Cookies.ContainsKey("source"))
+        {
+            string source = this.Request.Cookies["source"];
+            string currentPage = this.Request.Scheme + "://" + Request.Host + Request.Path;
+
+            if (source != "" && source!.ToLower().Contains("microsoft") == false && source.ToLower() != currentPage.ToLower())
+            {
+                Response.Cookies.Delete("source");
+                return new RedirectResult(source);
+            }
+        }
+
         try
         {
             this.AccessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(new[] { "api://4ec7fcdd-1ef9-47fc-a60c-9ef3ac716cb9/Read" });
@@ -49,5 +61,7 @@ public class IndexModel : PageModel
         {
 
         }
+
+        return Page();
     }
 }
