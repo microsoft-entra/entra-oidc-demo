@@ -4,6 +4,10 @@
     ViewData["Title"] = "Discover your path";
 }
 
+<div class="text-center">
+    <h1 class="display-5" style="padding-top: 20px;"><i class="bi me-2 bi-grid-3x3-gap-fill"> </i> Courses</h1>
+</div>
+
 @if (@Model.ShowEdit)
 {
     <br />
@@ -11,13 +15,187 @@
     Add Course</a>
 }
 
+<!-- First line -->
+<div class="row" style="padding-top: 50px;">
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <img class="card-img-top" src="~/courses/active-directory.svg" style="height: 80px;" alt="">
+            <div class="card-body">
+                <h5 class="card-title">Azure Active Directory</h5>
+                <p class="card-text">Enable identity and access management in the cloud.</p>
+                <a href="#" class="btn btn-primary">Start</a>
+                @if (@Model.ShowEdit)
+                {
+                    <a href="#" class="btn btn-danger">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <img class="card-img-top" src="~/courses/azure-sql-database.svg" style="height: 80px;" alt="">
+                <h5 class="card-title">Azure SQL Database</h5>
+                <p class="card-text">Create a SQL database that delivers intelligence built-in.</p>
+                <a href="#" class="btn btn-primary">Start</a>
+                @if (@Model.ShowEdit)
+                {
+                    <a href="#" class="btn btn-danger">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <img class="card-img-top" src="~/courses/storage-blobs.svg" style="height: 80px;" alt="">
+                <h5 class="card-title">Azure Blob Storage</h5>
+                <p class="card-text">Use massively scalable object storage for any type of unstructured data.</p>
+                <a href="#" class="btn btn-primary">Start</a>
+                @if (@Model.ShowEdit)
+                {
+                    <a href="#" class="btn btn-danger">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <img class="card-img-top" src="~/courses/cosmos-db.svg" style="height: 80px;" alt="">
+                <h5 class="card-title">Azure Cosmos DB</h5>
+                <p class="card-text"> Build modern apps at any scale using a fast NoSQL database with open APIs.</p>
+                <a href="#" class="btn btn-primary">Start</a>
+                @if (@Model.ShowEdit)
+                {
+                    <a href="#" class="btn btn-danger">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Second line-->
+<div class="row" style="padding-top: 25px;">
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <img class="card-img-top" src="~/courses/app-service.svg" style="height: 80px;" alt="">
+            <div class="card-body">
+                <h5 class="card-title">Azure App Service</h5>
+                <p class="card-text">Quickly create powerful apps for any platform or device using your choice of tools
+                    including Node.js and PHP.</p>
+                <a href="#" class="btn btn-primary">Start</a>
+                @if (@Model.ShowEdit)
+                {
+                    <a href="#" class="btn btn-danger">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <img class="card-img-top" src="~/courses/functions.svg" style="height: 80px;" alt="">
+                <h5 class="card-title">Azure Functions</h5>
+                <p class="card-text">Process events with a serverless code architecture.</p>
+                <a href="#" class="btn btn-primary">Start</a>
+                @if (@Model.ShowEdit)
+                {
+                    <a href="#" class="btn btn-danger">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <img class="card-img-top" src="~/courses/event-grid.svg" style="height: 80px;" alt="">
+                <h5 class="card-title">Azure Event Grid</h5>
+                <p class="card-text">Get reliable event delivery at massive scale.</p>
+                <a href="#" class="btn btn-primary">Start</a>
+                @if (@Model.ShowEdit)
+                {
+                    <a href="#" class="btn btn-danger">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <img class="card-img-top" src="~/courses/virtual-machines.svg" style="height: 80px;" alt="">
+                <h5 class="card-title">Azure Virtual Machines—Windows</h5>
+                <p class="card-text">Create Windows virtual machines with on-demand capacity in seconds.</p>
+                <a href="#" class="btn btn-primary">Start</a>
+                @if (@Model.ShowEdit)
+                {
+                    <a href="#" class="btn btn-danger">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Third line-->
+<div class="row" style="padding-top: 25px;">
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <img class="card-img-top" src="~/courses/automation.svg" style="height: 80px;" alt="">
+            <div class="card-body">
+                <h5 class="card-title">Automation</h5>
+                <p class="card-text">Simplify cloud management with process automation.</p>
+                <a href="#" class="btn btn-primary">Start</a>
+                @if (@Model.ShowEdit)
+                {
+                    <a href="#" class="btn btn-danger">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <img class="card-img-top" src="~/courses/vm-linux.svg" style="height: 80px;" alt="">
+                <h5 class="card-title">Azure Virtual Machines—Linux</h5>
+                <p class="card-text">Create Linux virtual machines with on-demand capacity in seconds.</p>
+                <a href="#" class="btn btn-primary">Start</a>
+                @if (@Model.ShowEdit)
+                {
+                    <a href="#" class="btn btn-danger">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <img class="card-img-top" src="~/courses/kubernetes-service.svg" style="height: 80px;" alt="">
+                <h5 class="card-title">Azure Kubernetes Service (AKS)</h5>
+                <p class="card-text">Deploy and manage containers using the tools you choose.</p>
+                <a href="#" class="btn btn-primary">Start</a>
+                @if (@Model.ShowEdit)
+                {
+                    <a href="#" class="btn btn-danger">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <img class="card-img-top" src="~/courses/key-vault.svg" style="height: 80px;" alt="">
+                <h5 class="card-title">Key Vault</h5>
+                <p class="card-text">Safeguard and maintain control of keys and other secrets.</p>
+                <a href="#" class="btn btn-primary">Start</a>
+                @if (@Model.ShowEdit)
+                {
+                    <a href="#" class="btn btn-danger">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="text-center">
-    @if (@Model.ShowEdit)
-    {
-        <img style="padding-top: 20px;" src="~/discovery_edit.png" />
-    }
-    else
-    {
-        <img style="padding-top: 20px;" src="~/discovery.png" />
-    }
+
 </div>

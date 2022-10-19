@@ -1,3 +1,12 @@
+.card-title
+{
+  height: 50px!important;
+  margin: auto!important;
+  padding-top: 5px;
+}
+.card-text{
+  height: 80px!important;
+}
 .list-group-item{
   font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif;
   font-size: 14px;
