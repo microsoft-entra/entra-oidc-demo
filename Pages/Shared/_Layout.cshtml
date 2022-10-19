@@ -7,7 +7,6 @@
     <title>@ViewData["Title"] - Entra eLearning demo</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/auth_request_generator.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -49,51 +48,57 @@
 
 </head>
 
+@{ 
+   var currentPage = ViewContext.RouteData.Values["page"].ToString().ToLower();
+}
+
 <body>
+    
+
     <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
         <div class="border-end bg-light" id="sidebar-wrapper">
             <div class="sidebar-heading border-bottom bg-light text-white"
-                style="background-color: #0B0B45!important;;">Menu</div>
+                style="background-color: #262626!important; color: white!important;"><img src="~/AppIcon.png" style="width: 117px; padding-left: 20px;" /></div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area="" asp-page="/Index"> <i
-                        class="bi me-2 bi-grid-3x3-gap-fill"></i>
+                <a class='list-group-item list-group-item-action p-3 @(currentPage == "/index" ? "list-group-current" : "")' asp-area="" asp-page="/Index"> <i
+                        class="list-group-icon bi me-2 bi-grid-3x3-gap-fill"></i>
                     Courses</a>
-                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area="" asp-page="/Me"> <i
-                        class="bi me-2 bi-person-circle"></i>
+                <a class='list-group-item list-group-item-action p-3 @(currentPage == "/me" ? "list-group-current" : "")' asp-area="" asp-page="/Me"> <i
+                        class="list-group-icon bi me-2 bi-person-circle"></i>
                     My profile</a>
-                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area=""
-                    asp-page="/SearchProfile"><i class="bi me-2 bi-search"></i>
+                <a class='list-group-item list-group-item-action p-3 @(currentPage == "/searchprofile" ? "list-group-current" : "")' asp-area=""
+                    asp-page="/SearchProfile"><i class="list-group-icon bi me-2 bi-search"></i>
                     Search profile</a>
-                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area=""
+                <a class='list-group-item list-group-item-action p-3 @(currentPage == "/profileedit" ? "list-group-current" : "")' asp-area=""
                     asp-page="/ProfileEdit"><i
-                        class="bi me-2 bi-person-lines-fill"></i>
+                        class="list-group-icon bi me-2 bi-person-lines-fill"></i>
                     Edit profile</a>
-                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area=""
-                    asp-page="/Groups"><i class="bi me-2 bi-people-fill"></i>
+                <a class='list-group-item list-group-item-action p-3 @(currentPage == "/groups" ? "list-group-current" : "")' asp-area=""
+                    asp-page="/Groups"><i class="list-group-icon bi me-2 bi-people-fill"></i>
                     Teams</a>
-                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"><i
-                        class="bi me-2 bi-cart3"></i>
+                <a class='list-group-item list-group-item-action p-3 @(currentPage == "home-index" ? "list-group-current" : "")' href="#!"><i
+                        class="list-group-icon bi me-2 bi-cart3"></i>
                     Orders</a>
-                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"><i
-                        class="bi me-2 bi-calendar-date"></i>
+                <a class='list-group-item list-group-item-action p-3 @(currentPage == "home-index" ? "list-group-current" : "")' href="#!"><i
+                        class="list-group-icon bi me-2 bi-calendar-date"></i>
                     Schedule</a>
-                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area=""
+                <a class='list-group-item list-group-item-action p-3 @(currentPage == "/files" ? "list-group-current" : "")' asp-area=""
                     asp-page="/Files"><i
-                        class="bi me-2 bi-graph-up-arrow"></i>
+                        class="list-group-icon bi me-2 bi-graph-up-arrow"></i>
                     Reports</a>
-                <a class="list-group-item list-group-item-action list-group-item p-3" asp-area=""
-                    asp-page="/Terminal"><i class="bi me-2 bi-megaphone"></i>
+                <a class='list-group-item list-group-item-action p-3 @(currentPage == "/terminal" ? "list-group-current" : "")' asp-area=""
+                    asp-page="/Terminal"><i class="list-group-icon bi me-2 bi-megaphone"></i>
                     Send notifications</a>
 
-                <a class="list-group-item list-group-item-action list-group-item p-3" href="#!"> <i
-                        class="bi me-2 bi-wrench"></i>
+                <a class='list-group-item list-group-item-action p-3' href="#!"> <i
+                        class="list-group-icon bi me-2 bi-wrench"></i>
                     Settings</a>
                 @if (ViewData["access_token"] != null)
                 {
-                    <a class="list-group-item list-group-item-action list-group-item p-3"
+                    <a class='list-group-item list-group-item-action p-3'
                     href='https://jwt.ms/#access_token=@ViewData["access_token"]'><i
-                        class="bi me-2 bi-file-earmark-binary"></i>
+                        class="list-group-icon bi me-2 bi-file-earmark-binary"></i>
                         Access token</a>
                 }
             </div>
@@ -102,16 +107,16 @@
         <div id="page-content-wrapper">
             <!-- Top navigation-->
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary border-bottom"
-                style="background-color: #0B0B45!important;">
+                style="background: #262626!important; margin-left: -1px;">
                 <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-page="/Index"><i class="bi bi-layers-half"></i> Entra
+                    <a class="navbar-brand" asp-area="" asp-page="/Index" style="color: white!important;"><i class="bi me-2 bi-layers-half"></i> 
                         eLearning
-                        demo</a>
+                        fictitious app</a>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                             <li style="margin-right: 20px;">
-                                <button type="submit" class="btn btn-primary" onclick="showCode()"><i
+                                <button type="submit" class="btn btn-primary" style="height: 70%; padding: 2px; margin-top: 5px;" onclick="showCode()"><i
                                         class="bi bi-code"></i></button>
                             <li>
                                 <partial name="_LoginPartial" />
@@ -120,7 +125,7 @@
                 </div>
             </nav>
             <!-- Page content-->
-            <div class="container-fluid" id="PageContent">
+            <div class="container-fluid" id="PageContent" style="background-color: #f8f8f8; padding-left: 35px; padding-right: 35px;">
                 @RenderBody()
             </div>
         </div>

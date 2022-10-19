@@ -1,3 +1,38 @@
+.list-group-item{
+  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgb(50, 49, 48)!important;
+}
+
+.list-group-item:hover{
+  background-color: #F3F2F1;
+  color: rgb(0, 120, 212)!important;;
+}
+
+.list-group-icon{
+  color: rgb(0, 120, 212)!important;
+}
+
+.list-group-flush>.list-group-item {
+  border-width: 0 0 0px;
+}
+
+.list-group-current{
+  border-left: 5px solid rgb(0, 120, 212)!important;
+  background-color: rgb(237, 235, 233);
+  color: rgb(16, 110, 190);
+}
+
+.display-5 {
+  color: #4d4d4d!important;
+}
+
+h1 {
+  font-size: 14px;
+}
+
+
 html {
   font-size: 14px;
 }
@@ -26,8 +61,8 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
 }
 .navbar > .container,
 .navbar > .container-fluid,
@@ -243,7 +278,7 @@ body {
 }
 
 #sidebar-wrapper .sidebar-heading {
-  padding: 0.875rem 1.25rem;
+  padding: 0.65rem 0.3rem;
   font-size: 1.2rem;
 }
 
