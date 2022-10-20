@@ -35,14 +35,23 @@ public class IndexModel : PageModel
             }
         }
 
+
         try
         {
-            this.AccessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(new[] { "api://4ec7fcdd-1ef9-47fc-a60c-9ef3ac716cb9/Read" });
+            this.AccessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(new[] { "https://graph.microsoft.com/user.read" });
             ViewData["access_token"] = this.AccessToken;
+        }
+        catch (System.Exception ex)
+        {
 
+        }
+
+        try
+        {
+            var appAccessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(new[] { "api://4ec7fcdd-1ef9-47fc-a60c-9ef3ac716cb9/Read" });
 
             var handler = new JwtSecurityTokenHandler();
-            JwtSecurityToken jwtSecurityToken = handler.ReadJwtToken(this.AccessToken);
+            JwtSecurityToken jwtSecurityToken = handler.ReadJwtToken(appAccessToken);
 
             List<Claim> roles = jwtSecurityToken.Claims
                 .Where(x => x.Type == "roles").ToList<Claim>();
