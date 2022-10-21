@@ -107,7 +107,7 @@
         document.getElementById("resultCode").innerHTML = JSON.stringify(json, null, 4).replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;");
 
         for (var key in json.value) {
-            if (json.value.hasOwnProperty(key)) {
+            if (json.value.hasOwnProperty(key) && (!json.value[key].userPrincipalName.toLowerCase().includes("microsoft"))) {
                 messages.push("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sending message to " + json.value[key].userPrincipalName);
             }
         }
